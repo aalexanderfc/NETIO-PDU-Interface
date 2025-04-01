@@ -1,5 +1,3 @@
-
-
 # 🔌 NETIO PDU 4C Dashboard Control with ThingsBoard via Modbus
 
 This repository demonstrates how to integrate and control a **NETIO PowerPDU 4C** over **Modbus TCP** using **ThingsBoard**, an open-source IoT platform. This project highlights how to read telemetry data and control power outputs directly through a custom dashboard.
@@ -29,21 +27,44 @@ By using **Modbus TCP**, this setup ensures robust industrial-grade communicatio
   </tr>
   <tr>
     <td align="center">📊 Real-time Dashboard</td>
-    <td align="center">📥 Telemetry View</td>
+    <td align="center">📅 Telemetry View</td>
   </tr>
   <tr>
     <td><img src="assets/Output-buttons.jpg" width="400"/></td>
     <td><img src="assets/Outputs-socket.jpg" width="400"/></td>
   </tr>
   <tr>
-    <td align="center">🖱️ Output Control Switches</td>
+    <td align="center">👡️ Output Control Switches</td>
     <td align="center">🔌 NETIO PowerPDU 4C Device</td>
   </tr>
 </table>
 
 ---
 
-## 🧰 Technologies Used
+## 🧰 About NETIO PDU 4C
+
+The **NETIO PowerPDU 4C** is a smart power distribution unit with four individually controllable IEC-320 C13 power outputs. It supports multiple M2M protocols including **Modbus TCP**, MQTT, SNMP, and more. Designed for IT, AV, and industrial use, it allows remote switching, power measurement, and automation integration.
+
+Key Features:
+- 4x switchable power outputs (socket control)
+- Power metering per output (depending on model)
+- Industrial-grade M2M communication protocols
+- API and local web interface
+
+Useful Register Map (from [NETIO Modbus TCP API Manual](./NETIO-Modbus-TCP_M2M-API-Protocol.pdf)):
+
+| Function                  | Register Address | Type   | Description                                    |
+|---------------------------|------------------|--------|------------------------------------------------|
+| Power grid frequency     | 1                | `uInt16` | x100 Hz                                       |
+| Voltage RMS              | 2                | `uInt16` | x10 Volts                                     |
+| True Power Factor        | 3                | `uInt16` | /1000                                          |
+| Current (all outputs)    | 4                | `uInt16` | mA                                             |
+| Power (all outputs)      | 5                | `int16`  | Watts                                          |
+| Output N State (R/W)     | 101-104 (R), 102-105 (W) | `uInt16` | Read or set socket ON/OFF/TOGGLE state         |
+
+---
+
+## 🛠️ Technologies Used
 
 - ⚙️ **Modbus TCP** (protocol for communication with the NETIO device)
 - 📡 **ThingsBoard Community Edition v3.9.0**
@@ -72,17 +93,18 @@ By using **Modbus TCP**, this setup ensures robust industrial-grade communicatio
 ## 🗺️ Modbus Configuration
 
 The configuration was defined using:
-- **Holding Registers (Function Code 03/06)** for Output control and status
+- **Holding Registers (Function Codes 03/06)** for Output control and state
 - **Input Registers (Function Code 04)** for measurement telemetry
 
 Example register mapping:
 
-| Metric            | Register | Type   | Description             |
-|-------------------|----------|--------|-------------------------|
-| Voltage           | 2        | `uInt16` | Voltage (×10)           |
-| Frequency         | 1        | `uInt16` | Frequency (×100)        |
-| All Outputs Power | 5        | `int16`  | Power in Watts          |
-| Output 1 Control  | 102      | `uInt16` | Control output (0–5)    |
+| Metric            | Register | Type   | Description                         |
+|-------------------|----------|--------|-------------------------------------|
+| Voltage           | 2        | `uInt16` | Voltage (×10)                       |
+| Frequency         | 1        | `uInt16` | Frequency (×100)                    |
+| All Outputs Power | 5        | `int16`  | Power in Watts                      |
+| Output 1 Control  | 102      | `uInt16` | Write: Action for Output 1          |
+| Output 1 Status   | 101      | `uInt16` | Read: State of Output 1 (0/1)       |
 
 ---
 
@@ -91,24 +113,24 @@ Example register mapping:
 Control outputs using RPC calls:
 - `0` = OFF
 - `1` = ON
-- `4` = TOGGLE
 - `2` = Short OFF
 - `3` = Short ON
+- `4` = TOGGLE
+- `5` = No action
 
 ---
 
-## 🧩 Dashboard Interaction
+## 🧹 Dashboard Interaction
 
 - Switches are configured via ThingsBoard widgets.
 - Telemetry is visualized using real-time charts and historical data panels.
-- Backend logic automatically processes Modbus register updates into readable telemetry.
-
+- The Modbus connector parses registers and sends updates to ThingsBoard.
+- Control is implemented using **RPC methods** tied to register writes.
 
 ---
 
-## 🧠 Author
+## 🧐 Author
 
 **Alexander Flores**  
-
-
-
+IoT & Embedded Systems Developer  
+GitHub: [aalexanderfc](https://github.com/aalexanderfc)
