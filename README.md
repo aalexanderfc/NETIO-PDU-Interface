@@ -55,12 +55,12 @@ Useful Register Map (from [NETIO Modbus TCP API Manual](./NETIO-Modbus-TCP_M2M-A
 
 | Function                  | Register Address | Type   | Description                                    |
 |---------------------------|------------------|--------|------------------------------------------------|
-| Power grid frequency     | 1                | `uInt16` | x100 Hz                                       |
-| Voltage RMS              | 2                | `uInt16` | x10 Volts                                     |
-| True Power Factor        | 3                | `uInt16` | /1000                                          |
-| Current (all outputs)    | 4                | `uInt16` | mA                                             |
-| Power (all outputs)      | 5                | `int16`  | Watts                                          |
-| Output N State (R/W)     | 101-104 (R), 102-105 (W) | `uInt16` | Read or set socket ON/OFF/TOGGLE state         |
+| Power grid frequency     | 0                | `uInt16` | x100 Hz                                       |
+| Voltage RMS              | 1                | `uInt16` | x10 Volts                                     |
+| True Power Factor        | 2                | `uInt16` | /1000                                          |
+| Current (all outputs)    | 100              | `uInt16` | mA                                             |
+| Power (all outputs)      | 200              | `int16`  | Watts                                          |
+| Output N State (R/W)     | 101-104          | `uInt16` | Read or set socket ON/OFF/TOGGLE state         |
 
 ---
 
@@ -100,11 +100,11 @@ Example register mapping:
 
 | Metric            | Register | Type   | Description                         |
 |-------------------|----------|--------|-------------------------------------|
-| Voltage           | 2        | `uInt16` | Voltage (×10)                       |
-| Frequency         | 1        | `uInt16` | Frequency (×100)                    |
-| All Outputs Power | 5        | `int16`  | Power in Watts                      |
-| Output 1 Control  | 102      | `uInt16` | Write: Action for Output 1          |
-| Output 1 Status   | 101      | `uInt16` | Read: State of Output 1 (0/1)       |
+| Voltage           | 1        | `uInt16` | Voltage (×10)                       |
+| Frequency         | 0        | `uInt16` | Frequency (×100)                    |
+| All Outputs Power | 200        | `int16`  | Power in Watts                      |
+| Output 1 Control  | 101      | `uInt16` | Write: Action for Output 1 (6)function   |
+| Output 1 Status   | 101      | `uInt16` | Read: State of Output 1 (0/1) (3)function |
 
 ---
 
