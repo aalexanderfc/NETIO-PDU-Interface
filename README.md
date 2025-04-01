@@ -1,5 +1,3 @@
-Absolutely! Here's the updated `README.md` with an extended **"Purpose"** section that clearly explains the intention behind the dashboard, including the context within the `delta.acandia` ThingsBoard environment.
-
 ---
 
 # 🔌 NETIO PDU 4C Dashboard Control with ThingsBoard via Modbus
@@ -111,5 +109,6 @@ Control outputs using RPC calls:
 ## 🧠 Author
 
 **Alexander Flores**  
+
 
 
