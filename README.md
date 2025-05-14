@@ -1,12 +1,18 @@
 # 🔌 NETIO PDU 4C Dashboard Control with ThingsBoard via Modbus
 
-This repository demonstrates how to integrate and control a **NETIO PowerPDU 4C** over **Modbus TCP** using **ThingsBoard**, an open-source IoT platform. This project highlights how to read telemetry data and control power outputs directly through a custom dashboard.
+This repository provides an overview of the **NETIO PowerPDU 4C** integration with **ThingsBoard**, highlighting the architecture, key components, and features of the system. This project focuses on remote power control and telemetry visualization using Modbus TCP, Docker-based ThingsBoard Gateway, and PostgreSQL for data storage.
+
+The system is designed to:
+- Collect real-time telemetry data from NETIO PDU 4C devices
+- Provide remote power output control via ThingsBoard RPC
+- Secure data transfer using SSL/TLS through Nginx
+- Support scalable IoT device management
 
 ---
 
 ## 🎯 Purpose
 
-The goal of this integration is to **remotely control and monitor a NETIO PowerPDU 4C device from outside the default NETIO web interface**, using a **custom-built dashboard inside the `delta.acandia` ThingsBoard instance**.
+The goal of this project is to **remotely control and monitor NETIO PowerPDU 4C devices** using a **custom-built dashboard inside the `delta.acandia` ThingsBoard instance**.
 
 This solution provides:
 - Centralized **visibility of electrical parameters** like voltage, current, power, frequency, and power factor.
