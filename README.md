@@ -4,8 +4,8 @@ This repository provides an overview of the **NETIO PowerPDU 4C** integration wi
 
 The system is designed to:
 - Collect real-time telemetry data from NETIO PDU 4C devices
-- Provide remote power output control via ThingsBoard RPC
-- Secure data transfer using SSL/TLS through Nginx
+- Provide remote power output control via ThingsBoard Remote Procedure Call (RPC)
+- Secure external access by terminating HTTPS connections through Nginx
 - Support scalable IoT device management
 
 ---
@@ -45,7 +45,7 @@ The system architecture is illustrated in the diagram above. It consists of the 
 4. **PostgreSQL Database**
    - Stores telemetry data and configuration settings for ThingsBoard
 
-5. **Nginx Reverse Proxy**
+5. **Nginx Reverse Proxy (HTTPS Enabler)**
    - Secures communication with the ThingsBoard server using SSL/TLS
    - Routes external requests to the correct internal services
 
@@ -126,7 +126,7 @@ Useful Register Map (from [NETIO Modbus TCP API Manual](./NETIO-Modbus-TCP_M2M-A
   - True Power Factor
 - ✅ Switch control of 4 output ports (ON/OFF/TOGGLE)
 - ✅ Telemetry collected via Modbus input and holding registers
-- ✅ Remote management through ThingsBoard RPC
+- ✅ Remote management through ThingsBoard Remote Procedure Call (RPC)
 
 ---
 
