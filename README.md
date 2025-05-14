@@ -18,6 +18,40 @@ By using **Modbus TCP**, this setup ensures robust industrial-grade communicatio
 
 ---
 
+## 🗺️ System Architecture
+
+![System Architecture](PDU_SystemArchitecture.png)
+
+The system architecture is illustrated in the diagram above. It consists of the following main components:
+
+1. **NETIO PDU 4C**
+   - Power distribution unit with TCP server support over Modbus (Port 502)
+   - Provides power consumption data and allows remote control via Modbus TCP
+
+2. **ThingsBoard Gateway (Docker)**
+   - Installed on the server to bridge Modbus data from the NETIO PDU 4C to ThingsBoard
+   - Manages data forwarding to the ThingsBoard server
+
+3. **ThingsBoard Server**
+   - Central IoT platform for data visualization and device management
+   - Receives data from the ThingsBoard Gateway and stores it in the PostgreSQL database
+
+4. **PostgreSQL Database**
+   - Stores telemetry data and configuration settings for ThingsBoard
+
+5. **Nginx Reverse Proxy**
+   - Secures communication with the ThingsBoard server using SSL/TLS
+   - Routes external requests to the correct internal services
+
+6. **ThingsBoard UI**
+   - Web interface for monitoring and controlling PDU devices
+   - Hosted at [https://delta.acandia.se](https://delta.acandia.se)
+
+7. **NETIO PDU Dashboard Control**
+   - Custom control panel for managing power outlets and monitoring real-time data
+
+---
+
 ## 📸 Screenshots
 
 <table>
@@ -87,45 +121,6 @@ Useful Register Map (from [NETIO Modbus TCP API Manual](./NETIO-Modbus-TCP_M2M-A
 - ✅ Switch control of 4 output ports (ON/OFF/TOGGLE)
 - ✅ Telemetry collected via Modbus input and holding registers
 - ✅ Remote management through ThingsBoard RPC
-
----
-
-## 🗺️ Modbus Configuration
-
-The configuration was defined using:
-- **Holding Registers (Function Codes 03/06)** for Output control and state
-- **Input Registers (Function Code 04)** for measurement telemetry
-
-Example register mapping:
-
-| Metric            | Register | Type   | Description                         |
-|-------------------|----------|--------|-------------------------------------|
-| Voltage           | 1        | `uInt16` | Voltage (×10)                       |
-| Frequency         | 0        | `uInt16` | Frequency (×100)                    |
-| All Outputs Power | 200        | `int16`  | Power in Watts                      |
-| Output 1 Control  | 101      | `uInt16` | Write: Action for Output 1 (6)function   |
-| Output 1 Status   | 101      | `uInt16` | Read: State of Output 1 (0/1) (3)function |
-
----
-
-## ⚡ Output Control Actions
-
-Control outputs using RPC calls:
-- `0` = OFF
-- `1` = ON
-- `2` = Short OFF
-- `3` = Short ON
-- `4` = TOGGLE
-- `5` = No action
-
----
-
-## 🧹 Dashboard Interaction
-
-- Switches are configured via ThingsBoard widgets.
-- Telemetry is visualized using real-time charts and historical data panels.
-- The Modbus connector parses registers and sends updates to ThingsBoard.
-- Control is implemented using **RPC methods** tied to register writes.
 
 ---
 
